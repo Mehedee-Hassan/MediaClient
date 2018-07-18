@@ -11,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+
 import automation.test.testapp2.R;
+import automation.test.testapp2.RecyclerViewDataAdapter;
+import automation.test.testapp2.SectionDataModel;
+import automation.test.testapp2.SingleItemModel;
 import automation.test.testapp2.view.adapter.DessertAdapter;
 
 /**
@@ -19,6 +24,7 @@ import automation.test.testapp2.view.adapter.DessertAdapter;
  */
 
 public class DummyFragment extends Fragment {
+    private ArrayList<SectionDataModel> allSampleData;
 
     int color;
 
@@ -34,18 +40,42 @@ public class DummyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dummy_fragment, container, false);
 
-        final FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.dummyfrag_bg);
-        frameLayout.setBackgroundColor(color);
+        allSampleData = new ArrayList<>();
+
+        createDummyData();
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-
-        DessertAdapter adapter = new DessertAdapter(getContext());
+        RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(allSampleData, this.getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
+
+//        final FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.dummyfrag_bg);
+//        frameLayout.setBackgroundColor(color);
+//
+//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview);
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setHasFixedSize(true);
+//
+//        DessertAdapter adapter = new DessertAdapter(getContext());
+//        recyclerView.setAdapter(adapter);
+
         return view;
+    }
+    private void createDummyData() {
+        for (int i = 1; i <= 20; i++) {
+            SectionDataModel dm = new SectionDataModel();
+            dm.setHeaderTitle("Section " + i);
+            ArrayList<SingleItemModel> singleItemModels = new ArrayList<>();
+            for (int j = 1; j <= 20; j++) {
+                singleItemModels.add(new SingleItemModel("Item " + j, "URL " + j));
+            }
+            dm.setAllItemInSection(singleItemModels);
+            allSampleData.add(dm);
+        }
+
     }
 }
