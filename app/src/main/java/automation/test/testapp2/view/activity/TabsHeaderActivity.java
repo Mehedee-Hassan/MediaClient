@@ -25,7 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import automation.test.testapp2.R;
-import automation.test.testapp2.SliderAdapter;
+import automation.test.testapp2.view.adapter.SliderAdapter;
 
 public class TabsHeaderActivity extends AppCompatActivity {
     private static final String TAG = TabsHeaderActivity.class.getSimpleName();

@@ -1,4 +1,4 @@
-package automation.test.testapp2;
+package automation.test.testapp2.view.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import automation.test.testapp2.R;
 
 /**
  * Created by DELL on 7/18/2018.
