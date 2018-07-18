@@ -1,6 +1,5 @@
 package automation.test.testapp2.view.activity;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -13,29 +12,30 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import automation.test.testapp2.R;
-import automation.test.testapp2.view.adapter.DessertAdapter;
+import automation.test.testapp2.SliderAdapter;
 
 public class TabsHeaderActivity extends AppCompatActivity {
     private static final String TAG = TabsHeaderActivity.class.getSimpleName();
+    int image[] = {R.drawable.header,R.drawable.header2,R.drawable.header4,R.drawable.header5};
     private ViewFlipper simpleViewFlipper;
+    SliderAdapter sliderAdapter;
+    private ViewPager sliderViewPage;
+    private Timer timer;
+    private int currentPage = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,11 @@ public class TabsHeaderActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
         setSupportActionBar(toolbar);
 
+        sliderViewPage = (ViewPager) findViewById(R.id.viewPagerAutoSlide);
+        sliderAdapter =  new SliderAdapter(TabsHeaderActivity.this,image);
+        sliderViewPage.setAdapter(sliderAdapter);
+
+        sliderTimer(4,sliderViewPage);
 
 
         if (getSupportActionBar() != null)
@@ -113,29 +118,29 @@ public class TabsHeaderActivity extends AppCompatActivity {
             }
         });
 
-        simpleViewFlipper=(ViewFlipper)findViewById(R.id. simpleViewFlipper);// get reference of ViewFlipper
-        simpleViewFlipper.setFlipInterval(4000);
-        simpleViewFlipper.setAutoStart(true);
-        simpleViewFlipper.setInAnimation(this,android.R.anim.slide_in_left);
-        simpleViewFlipper.setOutAnimation(this,android.R.anim.slide_out_right);
 
-        int image[] = {R.drawable.header,R.drawable.header2,R.drawable.header3};
-
-        for (int i = 0 ;i < 3 ; i++){
-            flipperImage(image[i]);
-        }
-
-
-
-        simpleViewFlipper.startFlipping();
     }
 
-    private void flipperImage(int i) {
-        ImageView imageView = new ImageView(this);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(i);
-        simpleViewFlipper.addView(imageView);
+    private void sliderTimer(final int NUM_PAGES, final ViewPager viewPager) {
+
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (currentPage == NUM_PAGES - 1) {
+                                currentPage = 0;
+                            }
+                            viewPager.setCurrentItem(currentPage++, true);
+                        }
+                    });
+                }
+            }, 1500, 4000);
+
     }
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
