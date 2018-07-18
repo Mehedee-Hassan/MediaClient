@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_activities">
+        <item>Test App 1</item>
+        <item>Test App 2</item>
+        <item>Test App 3</item>
+        <item>Test App 4</item>
+        <item>Test App 5</item>
+        <item>Test App 6</item>
+        <item>Test App 6</item>
+        <item>Test App 6</item>
+        <item>Test App 6</item>
+    </string-array>
+
+    <string-array name="dessert_names">
+        <item>Test App 1</item>
+        <item>Test App 2</item>
+        <item>Test App 3</item>
+        <item>Test App 4</item>
+        <item>Test App 5</item>
+        <item>Test App 6</item>
+        <item>Test App 6</item>
+        <item>Test App 6</item>
+        <item>Test App 6</item>
+    </string-array>
+
+    <string-array name="home_activities_subtitle">
+        <item>Description of app 1</item>
+        <item>Description of app 2</item>
+        <item>Description of app 3</item>
+        <item>Description of app 4</item>
+        <item>Description of app 5</item>
+        <item>Description of app 6</item>
+        <item>Description of app 7</item>
+        <item>Description of app 8</item>
+        <item>Description of app 9</item>
+
+
+    </string-array>
+
+    <string-array name="dessert_descriptions">
+        <item>Description of app 1</item>
+        <item>Description of app 2</item>
+        <item>Description of app 3</item>
+        <item>Description of app 4</item>
+        <item>Description of app 5</item>
+        <item>Description of app 6</item>
+        <item>Description of app 7</item>
+        <item>Description of app 8</item>
+        <item>Description of app 9</item>
+
+    </string-array>
+
+
+</resources>
