@@ -11,4 +11,12 @@
     <color name="primary_500">#FFF234</color>
     <color name="primary_700">#FF2234</color>
     <color name="purple">#e600ff</color>
+    <color name="yellow">#ececec</color>
+    <color name="blue">#000fff</color>
+    <color name="title">#0000ff</color>
+    <color name="year">#fff098</color>
+    <color name="semi_transparent_black">#90606060</color>
+    <color name="dark_gray">#8e8e8e</color>
+    <color name="black">#000000</color>
+    <color name="mild_black">#4b4b4d</color>
 </resources>

@@ -1,4 +1,4 @@
-package automation.test.testapp2;
+package automation.test.testapp2.model;
 
 import java.util.ArrayList;
 

@@ -26,6 +26,7 @@ import java.util.TimerTask;
 
 import automation.test.testapp2.R;
 import automation.test.testapp2.view.adapter.SliderAdapter;
+import automation.test.testapp2.view.fragment.CommonFragment;
 
 public class TabsHeaderActivity extends AppCompatActivity {
     private static final String TAG = TabsHeaderActivity.class.getSimpleName();
@@ -144,17 +145,17 @@ public class TabsHeaderActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new DummyFragment(
+        adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.cyan)), "APPS");
-        adapter.addFrag(new DummyFragment(
+        adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.amber)), "GAMES");
-        adapter.addFrag(new DummyFragment(
+        adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.purple)), "YOUTUBE");
-        adapter.addFrag(new DummyFragment(
+        adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.purple)), "YOUTUBE1");
-        adapter.addFrag(new DummyFragment(
+        adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.purple)), "YOUTUBE2");
-        adapter.addFrag(new DummyFragment(
+        adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.purple)), "YOUTUBE3");
         viewPager.setAdapter(adapter);
     }

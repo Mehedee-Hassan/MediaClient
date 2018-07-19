@@ -1,38 +1,36 @@
-package automation.test.testapp2.view.activity;
+package automation.test.testapp2.view.fragment;
 
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 
 import automation.test.testapp2.R;
-import automation.test.testapp2.RecyclerViewDataAdapter;
-import automation.test.testapp2.SectionDataModel;
-import automation.test.testapp2.SingleItemModel;
-import automation.test.testapp2.view.adapter.DessertAdapter;
+import automation.test.testapp2.view.adapter.RecyclerViewDataAdapter;
+import automation.test.testapp2.model.SectionDataModel;
+import automation.test.testapp2.model.SingleItemModel;
+import automation.test.testapp2.recycler.TestRecyclerView2;
 
 /**
  * Created by DELL on 7/18/2018.
  */
 
-public class DummyFragment extends Fragment {
+public class CommonFragment extends Fragment {
     private ArrayList<SectionDataModel> allSampleData;
 
     int color;
 
-    public DummyFragment() {
+    public CommonFragment() {
     }
 
     @SuppressLint("ValidFragment")
-    public DummyFragment(int color) {
+    public CommonFragment(int color) {
         this.color = color;
     }
 
@@ -44,7 +42,7 @@ public class DummyFragment extends Fragment {
 
         createDummyData();
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.dummyfrag_scrollableview);
+        TestRecyclerView2 recyclerView = (TestRecyclerView2) view.findViewById(R.id.dummyfrag_scrollableview);
         recyclerView.setHasFixedSize(true);
         RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(allSampleData, this.getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));

@@ -1,4 +1,4 @@
-package automation.test.testapp2;
+package automation.test.testapp2.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +16,14 @@ import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.util.ArrayList;
 
+import automation.test.testapp2.R;
+import automation.test.testapp2.model.SectionDataModel;
+import automation.test.testapp2.recycler.TestRecyclerView;
+
 public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDataAdapter.ItemRowHolder>{
 
+
+    private static final String TAG = "RecyclerViewDataAdapter";
     private ArrayList<SectionDataModel> dataList;
     private Context mContext;
     private RecyclerView.RecycledViewPool recycledViewPool;
@@ -34,8 +40,14 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, null);
         ItemRowHolder rowHolder = new ItemRowHolder(v);
         snapHelper = new GravitySnapHelper(Gravity.START);
+
+
+
+
+
         return rowHolder;
     }
+
 
     @Override
     public void onBindViewHolder(ItemRowHolder holder, int position) {
@@ -54,22 +66,28 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
                 Toast.makeText(view.getContext(), "Button More Clicked!" + sectionName, Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
     }
+
+
+
 
     @Override
     public int getItemCount() {
         return (null != dataList ? dataList.size() : 0);
     }
 
-    public class ItemRowHolder extends RecyclerView.ViewHolder {
+    public class ItemRowHolder extends TestRecyclerView.ViewHolder {
         protected TextView itemTitle;
-        protected RecyclerView recyclerView;
+        protected TestRecyclerView recyclerView;
         protected Button btnMore;
 
         public ItemRowHolder(View itemView) {
             super(itemView);
             this.itemTitle = (TextView) itemView.findViewById(R.id.itemTitle);
-            this.recyclerView = (RecyclerView) itemView.findViewById(R.id.recycler_view_list);
+            this.recyclerView = (TestRecyclerView) itemView.findViewById(R.id.recycler_view_list);
             this.btnMore = (Button) itemView.findViewById(R.id.btnMore);
         }
     }

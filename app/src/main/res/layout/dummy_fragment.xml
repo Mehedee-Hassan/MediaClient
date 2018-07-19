@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_light">
 
-    <android.support.v7.widget.RecyclerView
+    <automation.test.testapp2.recycler.TestRecyclerView2
         android:id="@+id/dummyfrag_scrollableview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+
+    <item
+        android:id="@+id/navigation_funny"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_funny"
+        />
+
+    <item
+        android:id="@+id/navigation_sports"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_sports" />
+
+    <!--<item-->
+        <!--android:id="@+id/navigation_entertainment"-->
+        <!--android:icon="@drawable/ic_notifications_black_24dp"-->
+        <!--android:title="@string/title_entertainment"-->
+        <!--/>-->
+
+    <item
+        android:id="@+id/navigation_music"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_musics"
+        />
+    <item
+        android:id="@+id/navigation_films"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/title_films"
+        />
+
+    <!--<item-->
+        <!--android:id="@+id/navigation_animation"-->
+        <!--android:icon="@drawable/ic_dashboard_black_24dp"-->
+        <!--android:title="@string/title_animations"-->
+        <!--/>-->
+    <!--<item-->
+        <!--android:id="@+id/navigation_action"-->
+        <!--android:icon="@drawable/ic_dashboard_black_24dp"-->
+        <!--android:title="@string/title_actions"-->
+        <!--/>-->
+    <!--<item-->
+        <!--android:id="@+id/navigation_gaming"-->
+        <!--android:icon="@drawable/ic_dashboard_black_24dp"-->
+        <!--android:title="@string/title_gaming"-->
+        <!--/>-->
+
+</menu>
