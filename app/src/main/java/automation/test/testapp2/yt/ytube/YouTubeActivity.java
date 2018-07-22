@@ -54,7 +54,7 @@ public class YouTubeActivity extends AppCompatActivity {
 
 
 
-        if (ApiKey.YOUTUBE_API_KEY.startsWith("YOUR_API_KEY")) {
+        if (ApiKey.YOUTUBE_API_KEY.startsWith(ApiKey.YOUTUBE_API_KEY)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage("Edit ApiKey.java and replace \"YOUR_API_KEY\" with your Applications Browser API Key")
                         .setTitle("Missing API Key")
