@@ -104,6 +104,11 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     private ListCardAdapter mListCardAdapter;
     private View videoDescriptionBlock;
     private int topPositionForV;
+    private String details;
+    private String title;
+    private String videoid;
+    private TextView bottomYTtitle;
+    private TextView bottomYTdes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +118,12 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
+
+
+        details = getIntent().getStringExtra(Constant.START_ACTIVITY.YTA.KEYS.DETAILS);
+        title = getIntent().getStringExtra(Constant.START_ACTIVITY.YTA.KEYS.YT_VIDEO_TITLE);
+        videoid = getIntent().getStringExtra(Constant.START_ACTIVITY.YTA.KEYS.YT_VIDEO_ID);
+
 
 
 
@@ -126,11 +137,16 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
         youTubeView.initialize(ApiKey.YOUTUBE_API_KEY, this);
 
+
         playerStateChangeListener = new MyPlayerStateChangeListener();
         playbackEventListener = new MyPlaybackEventListener();
 
 
         changeBottomNavBar();
+
+        bottomYTtitle = (TextView) findViewById(R.id.yt_video_title_bottom);
+        bottomYTdes = (TextView) findViewById(R.id.yt_video_description_bottom);
+
         initRecycler();
 
 
@@ -168,22 +184,12 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 
 
+//      youtube list
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view2);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-
-        Resources resources = getResources();
-        if (false) {
-        } else {
-            // use a linear layout on phone devices
-            mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        }
-
-
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         reloadUiCalling(false,null);
-
 
     }
 
@@ -216,7 +222,11 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 //        player.setPlaybackEventListener(playbackEventListener);
 
         if (!b) {
-            player.cueVideo("hk3bXMbFkew"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            if(videoid != null)
+
+                bottomYTdes.setText(details);
+                bottomYTtitle.setText(title);
+                player.cueVideo(videoid); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
         }
     }
 
@@ -271,15 +281,22 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
             @Override
             public void playVideoOnclick(String id, String title, String description) {
-                player.cueVideo(id); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
-                player.play();
-                TextView bottomYTtitle = (TextView) findViewById(R.id.yt_video_title_bottom);
-                TextView bottomYTdes = (TextView) findViewById(R.id.yt_video_description_bottom);
+
+                if(id!=null) {
+                    player.cueVideo(id); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+                    player.play();
+                }
+
 
                 bottomYTdes.setText(description);
                 bottomYTtitle.setText(title);
             }
-        });
+
+            @Override
+            public void startActivityAndPlay(String id, String title, String details) {
+
+            }
+        },false);
 
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

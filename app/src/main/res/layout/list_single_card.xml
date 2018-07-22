@@ -7,8 +7,10 @@
     android:layout_marginTop="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-
-    android:orientation="horizontal">
+    android:background="@color/white_70"
+    android:orientation="horizontal"
+    app:cardElevation="3dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"

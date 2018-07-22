@@ -27,6 +27,7 @@ import java.util.TimerTask;
 import automation.test.testapp2.R;
 import automation.test.testapp2.view.adapter.SliderAdapter;
 import automation.test.testapp2.view.fragment.CommonFragment;
+import automation.test.testapp2.view.fragment.YoutubeFragment;
 
 public class TabsHeaderActivity extends AppCompatActivity {
     private static final String TAG = TabsHeaderActivity.class.getSimpleName();
@@ -149,7 +150,7 @@ public class TabsHeaderActivity extends AppCompatActivity {
                 ContextCompat.getColor(this, R.color.cyan)), "APPS");
         adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.amber)), "GAMES");
-        adapter.addFrag(new CommonFragment(
+        adapter.addFrag(new YoutubeFragment(
                 ContextCompat.getColor(this, R.color.purple)), "YOUTUBE");
         adapter.addFrag(new CommonFragment(
                 ContextCompat.getColor(this, R.color.purple)), "YOUTUBE1");

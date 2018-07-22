@@ -1,6 +1,9 @@
 package automation.test.testapp2.yt.ytube;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +21,10 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 
 import automation.test.testapp2.R;
+import automation.test.testapp2.yt.util.Constant;
 import automation.test.testapp2.yt.ytube.model.ListVideos;
+
+import static android.graphics.Color.WHITE;
 
 
 public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHolder> {
@@ -27,6 +33,8 @@ public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHo
     private final YouTubeActivity.LastItemReachedListener mListener;
 
     private static final String TAG = "ListCardAdapter";
+    private final boolean fromMainActivity;
+    private Intent mContext;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,10 +68,10 @@ public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHo
 
 
 
-    public ListCardAdapter(ListVideos playlistVideos, YouTubeActivity.LastItemReachedListener lastItemReachedListener) {
+    public ListCardAdapter(ListVideos playlistVideos, YouTubeActivity.LastItemReachedListener lastItemReachedListener ,boolean fromMainActivity) {
         mPlaylistVideos = playlistVideos;
         mListener = lastItemReachedListener;
-
+        this.fromMainActivity = fromMainActivity;
     }
 
     // Create new views (invoked by the layout manager)
@@ -97,6 +105,7 @@ public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHo
 
         holder.mTitleText.setText(videoSnippet.getTitle());
         holder.mDescriptionText.setText(videoSnippet.getDescription());
+        holder.itemView.setBackgroundColor(WHITE);
 
         // load the video thumbnail image
         Picasso.with(holder.mContext)
@@ -191,6 +200,32 @@ public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHo
                 });
             }
         });
+
+        if(fromMainActivity == true){
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.itemView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            String details = video.getSnippet().getDescription();
+                            if (details == null || details.isEmpty()){
+                                details = (video.getSnippet().getPublishedAt() != null) ? new PrettyTimeEx().format(video.getSnippet().getPublishedAt()) : "";
+                                details += " | "+video.getStatistics().getViewCount()+" views";
+                            }
+
+
+
+
+//                            mListener.playVideoOnclick(video.getId(),video.getSnippet().getTitle(),details);
+                            mListener.startActivityAndPlay(video.getId(),video.getSnippet().getTitle(),details);
+                        }
+                    });
+                }
+            });
+        }
+
     }
 
     @Override

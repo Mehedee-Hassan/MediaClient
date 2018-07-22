@@ -34,4 +34,14 @@ public class Constant {
             }
         }
     }
+
+    public class START_ACTIVITY {
+        public class YTA {
+            public class KEYS {
+                public static final String DETAILS = "START_ACTIVITY_YTA_KEYS_DETAILS";
+                public static final String YT_VIDEO_ID = "START_ACTIVITY_YTA_KEYS_YT_VIDEO_ID";
+                public static final String YT_VIDEO_TITLE = "START_ACTIVITY_YTA_KEYS_YT_VIDEO_TITLE";
+            }
+        }
+    }
 }

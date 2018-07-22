@@ -25,6 +25,7 @@ import com.google.api.services.youtube.model.Video;
 import java.util.List;
 
 import automation.test.testapp2.R;
+import automation.test.testapp2.yt.util.Constant;
 import automation.test.testapp2.yt.ytube.model.ListVideos;
 
 
@@ -39,6 +40,9 @@ public class YouTubeActivity extends AppCompatActivity {
     private ListVideos mListVideos;
     private YouTube mYouTubeDataApi;
     private ListCardAdapter mListCardAdapter;
+    private String details;
+    private String title;
+    private String videoid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,6 @@ public class YouTubeActivity extends AppCompatActivity {
         if(!isConnected()){
             Toast.makeText(YouTubeActivity.this,"No Internet Connection Detected", Toast.LENGTH_LONG).show();
         }
-
-
 
 
 
@@ -177,7 +179,12 @@ public class YouTubeActivity extends AppCompatActivity {
 
             }
 
-        });
+            @Override
+            public void startActivityAndPlay(String id, String title, String details) {
+
+            }
+
+        },false);
 
 
         mRecyclerView.setAdapter(mListCardAdapter);
@@ -204,6 +211,7 @@ public class YouTubeActivity extends AppCompatActivity {
         void onMovedFromFirst();
         void onFirsItemReached();
         void playVideoOnclick(String id, String title, String description);
+        void startActivityAndPlay(String id, String title, String details);
     }
 
 }
