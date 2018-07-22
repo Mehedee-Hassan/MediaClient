@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ViewFlipper;
 
 
@@ -31,7 +33,7 @@ import automation.test.testapp2.view.fragment.YoutubeFragment;
 
 public class TabsHeaderActivity extends AppCompatActivity {
     private static final String TAG = TabsHeaderActivity.class.getSimpleName();
-    int image[] = {R.drawable.header,R.drawable.header2,R.drawable.header4,R.drawable.header5};
+    int image[] = {R.drawable.header,R.drawable.header2,R.drawable.header3,R.drawable.header5};
     private ViewFlipper simpleViewFlipper;
     SliderAdapter sliderAdapter;
     private ViewPager sliderViewPage;
@@ -42,7 +44,12 @@ public class TabsHeaderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_tabs_header);
+
+
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.htab_toolbar);
         setSupportActionBar(toolbar);

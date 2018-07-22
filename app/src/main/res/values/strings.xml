@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestApp2</string>
+    <string name="app_name">WE PLAY</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -16,4 +16,5 @@
     <string name="title_education">Educations</string>
     <string name="title_funny">Funny</string>
     <string name="title_home">Home</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

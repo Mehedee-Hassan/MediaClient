@@ -15,14 +15,7 @@ import automation.test.testapp2.util.ApiKey;
 
 public abstract class GetPlaylistAsyncTask extends AsyncTask<String, Void, Pair<String, List<Video>>> {
     private static final String TAG = "GetPlaylistAsyncTask";
-    private static final Long YOUTUBE_PLAYLIST_MAX_RESULTS = 10L;
 
-    //see: https://developers.google.com/youtube/v3/docs/playlistItems/list
-    private static final String YOUTUBE_PLAYLIST_PART = "snippet";
-    private static final String YOUTUBE_PLAYLIST_FIELDS = "pageInfo,nextPageToken,items(id,snippet(resourceId/videoId))";
-    //see: https://developers.google.com/youtube/v3/docs/videos/list
-    private static final String YOUTUBE_VIDEOS_PART = "snippet,contentDetails,statistics"; // video resource properties that the response will include.
-    private static final String YOUTUBE_VIDEOS_FIELDS = "items(id,snippet(title,description,thumbnails/high),contentDetails/duration,statistics)"; // selector specifying which fields to include in a partial response.
 
     private YouTube mYouTubeDataApi;
     List<Video> searchResultList = null;
@@ -69,7 +62,7 @@ public abstract class GetPlaylistAsyncTask extends AsyncTask<String, Void, Pair<
 
 //            videosList.setRegionCode(Constant.YT.VIDEO.REGION_CODE.INDIA);
 
-            videosList.setMaxResults(15L);
+            videosList.setMaxResults(20L);
             videosList.setFields("items(id, snippet/defaultAudioLanguage, snippet/defaultLanguage, snippet/publishedAt, snippet/title, snippet/channelId, snippet/channelTitle," +
                     "snippet/thumbnails, contentDetails/duration, statistics)," +
                     "nextPageToken");

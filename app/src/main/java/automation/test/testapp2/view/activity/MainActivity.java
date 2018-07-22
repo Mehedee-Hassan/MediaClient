@@ -1,6 +1,7 @@
 package automation.test.testapp2.view.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,10 +66,12 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    pbRvYtlist.setVisibility(View.VISIBLE);
                     reloadUiCalling(true, Constant.YT.VIDEO.CATEGORY_ID.COMEDY);
 
                     return true;
                 case R.id.navigation_sports:
+                    pbRvYtlist.setVisibility(View.VISIBLE);
                     reloadUiCalling(true, Constant.YT.VIDEO.CATEGORY_ID.Sports);
 
                     return true;
@@ -75,18 +79,22 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 //                    reloadUiCalling(true,Constant.YT.VIDEO.CATEGORY_ID.Entertainment);
 //                    return true;
                 case R.id.navigation_films:
+                    pbRvYtlist.setVisibility(View.VISIBLE);
                     reloadUiCalling(true, Constant.YT.VIDEO.CATEGORY_ID.Films);
                     return true;
 //                case R.id.navigation_animation:
 //                    reloadUiCalling(true,Constant.YT.VIDEO.CATEGORY_ID.Animations);
 //                    return true;
                 case R.id.navigation_funny:
+                    pbRvYtlist.setVisibility(View.VISIBLE);
                     reloadUiCalling(true, Constant.YT.VIDEO.CATEGORY_ID.COMEDY);
                     return true;
 //                case R.id.navigation_action:
 //                    reloadUiCalling(true,Constant.YT.VIDEO.CATEGORY_ID.SiFi);
 //                    return true;
                 case R.id.navigation_music:
+                    pbRvYtlist.setVisibility(View.VISIBLE);
+
                     reloadUiCalling(true, Constant.YT.VIDEO.CATEGORY_ID.Music);
                     return true;
             }
@@ -108,6 +116,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     private String videoid;
     private TextView bottomYTtitle;
     private TextView bottomYTdes;
+    private ProgressBar pbRvYtlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +154,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
         bottomYTtitle = (TextView) findViewById(R.id.yt_video_title_bottom);
         bottomYTdes = (TextView) findViewById(R.id.yt_video_description_bottom);
+        pbRvYtlist = (ProgressBar) findViewById(R.id.pb_yt_rv_ytactivity);
 
         initRecycler();
 
@@ -169,7 +179,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     }
 
     private void initRecycler() {
-
+        pbRvYtlist.setVisibility(View.VISIBLE);
         if(!isConnected()){
             Toast.makeText(MainActivity.this,"No Internet Connection Detected", Toast.LENGTH_LONG).show();
         }
@@ -348,6 +358,9 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             listVideos.addAll(result.second);
 
             mListCardAdapter.notifyItemRangeInserted(positionStart, listSize);
+            pbRvYtlist.setVisibility(View.GONE);
+
+
         }
     }
 
