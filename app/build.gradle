@@ -52,5 +52,6 @@ dependencies {
 
     implementation group: 'org.ocpsoft.prettytime', name: 'prettytime', version: '4.0.1.Final'
 
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:8.0.1'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
 }

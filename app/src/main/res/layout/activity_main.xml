@@ -12,28 +12,41 @@
 
 
     <FrameLayout
+        android:id="@+id/youtube_player_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="35"
         android:background="@color/yellow"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
-            android:weightSum="100"
-            >
+        android:elevation="1012dp"
 
-            <com.google.android.youtube.player.YouTubePlayerView
-                android:id="@+id/youtube_view"
+        >
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:orientation="vertical"-->
+            <!--android:weightSum="100"-->
+            <!--&gt;-->
+
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView
+                android:id="@+id/youtube_player_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="15"
-                android:paddingBottom="0dp"
+                android:elevation="1005dp"
+
                 />
-      </LinearLayout>
+
+            <!--<com.google.android.youtube.player.YouTubePlayerView-->
+                <!--android:id="@+id/youtube_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="15"-->
+                <!--android:paddingBottom="0dp"-->
+                <!--android:visibility="gone"-->
+                <!--/>-->
+      <!--</LinearLayout>-->
     </FrameLayout>
 
     <FrameLayout

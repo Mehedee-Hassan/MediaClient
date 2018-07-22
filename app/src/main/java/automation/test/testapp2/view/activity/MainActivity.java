@@ -1,7 +1,10 @@
 package automation.test.testapp2.view.activity;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.LifecycleRegistry;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,30 +30,34 @@ import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Video;
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.PlayerConstants;
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerFullScreenListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerInitListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.listeners.YouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.player.playerUtils.FullScreenHelper;
 
 import java.util.List;
 
 import automation.test.testapp2.R;
 import automation.test.testapp2.util.Constant;
-import automation.test.testapp2.util.ApiKey;
 import automation.test.testapp2.background.GetPlaylistAsyncTask;
 import automation.test.testapp2.view.adapter.yt.ListCardAdapter;
 import automation.test.testapp2.yt.ytube.YouTubeActivity;
 import automation.test.testapp2.model.yt.ListVideos;
 
 
-public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener{
+public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,LifecycleOwner {
 
     private static final String TAG = "MainActivity";
 
     private static final int RECOVERY_REQUEST = 1;
-    private YouTubePlayerView youTubeView;
+//    private YouTubePlayerView youTubeView;
     private MyPlayerStateChangeListener playerStateChangeListener;
     private MyPlaybackEventListener playbackEventListener;
     private YouTubePlayer player;
@@ -57,6 +65,25 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     private TextView mTextMessage;
     private final GsonFactory mJsonFactory = new GsonFactory();
     private final HttpTransport mTransport = AndroidHttp.newCompatibleTransport();
+    private LifecycleRegistry mLifecycleRegistry;
+    //    private RecyclerView recyclerView;
+//    private MoviesAdapter mAdapter;
+//    private List<Movie> movieList = new ArrayList<>();
+    private YouTube mYoutubeDataApi;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private ListVideos mListVideos;
+    private ListCardAdapter mListCardAdapter;
+    private View videoDescriptionBlock;
+    private int topPositionForV;
+    private String details;
+    private String title;
+    private String videoid;
+    private TextView bottomYTtitle;
+    private TextView bottomYTdescription;
+    private ProgressBar pbRvYtlist;
+    private com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView youTubeViewTestLib;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -101,22 +128,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             return false;
         }
     };
-//    private RecyclerView recyclerView;
-//    private MoviesAdapter mAdapter;
-//    private List<Movie> movieList = new ArrayList<>();
-    private YouTube mYoutubeDataApi;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private ListVideos mListVideos;
-    private ListCardAdapter mListCardAdapter;
-    private View videoDescriptionBlock;
-    private int topPositionForV;
-    private String details;
-    private String title;
-    private String videoid;
-    private TextView bottomYTtitle;
-    private TextView bottomYTdes;
-    private ProgressBar pbRvYtlist;
+    private FrameLayout youtubePlayerContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +154,15 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 
 
-        youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
-        youTubeView.initialize(ApiKey.YOUTUBE_API_KEY, this);
+//        youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
+        youTubeViewTestLib = (com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView)findViewById(R.id.youtube_player_view);
+        youtubePlayerContainer = (FrameLayout) findViewById(R.id.youtube_player_container);
 
+//        youTubeView.initialize(ApiKey.YOUTUBE_API_KEY, this);
+
+//        getLifecycle().addObserver(youTubeViewTestLib);
+
+        playOnYoutube(videoid,title,details);
 
         playerStateChangeListener = new MyPlayerStateChangeListener();
         playbackEventListener = new MyPlaybackEventListener();
@@ -153,12 +171,88 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         changeBottomNavBar();
 
         bottomYTtitle = (TextView) findViewById(R.id.yt_video_title_bottom);
-        bottomYTdes = (TextView) findViewById(R.id.yt_video_description_bottom);
+        bottomYTdescription = (TextView) findViewById(R.id.yt_video_description_bottom);
         pbRvYtlist = (ProgressBar) findViewById(R.id.pb_yt_rv_ytactivity);
 
         initRecycler();
+        mLifecycleRegistry = new LifecycleRegistry(this);
+        mLifecycleRegistry.markState(Lifecycle.State.CREATED);
+
+    }
+
+    private void playOnYoutube(final String videoid,final String title,final String details) {
+
+        final FrameLayout.LayoutParams makefullscreen  = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        final com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView.LayoutParams makefullscreenytVid  = new com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
 
+
+        youTubeViewTestLib.getPlayerUIController().setFullScreenButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick 1: **");
+
+//                youtubePlayerContainer.setLayoutParams(makefullscreen);
+                if(youTubeViewTestLib.isFullScreen()){
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    youTubeViewTestLib.exitFullScreen();
+                    mRecyclerView.setVisibility(View.VISIBLE);
+
+
+                }else {
+
+                    youTubeViewTestLib.enterFullScreen();
+                    youTubeViewTestLib.setLayoutParams(makefullscreenytVid);
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    mRecyclerView.setVisibility(View.GONE);
+                    youtubePlayerContainer.setLayoutParams(makefullscreen);
+
+                }
+            }
+        });
+
+
+
+        youTubeViewTestLib.initialize(new YouTubePlayerInitListener() {
+            @Override
+            public void onInitSuccess(@NonNull final com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer youTubePlayer) {
+
+                youTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady() {
+
+                        String videoId = videoid;
+                        bottomYTtitle.setText(title);
+                        bottomYTdescription.setText(details);
+
+
+                        youTubePlayer.loadVideo(videoId, 0);
+
+
+                    }
+                });
+            }
+
+        }, true);
+
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        mLifecycleRegistry.markState(Lifecycle.State.RESUMED);
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        mLifecycleRegistry.markState(Lifecycle.State.STARTED);
+
+        super.onStart();
     }
 
     private void changeBottomNavBar() {
@@ -233,7 +327,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         if (!b) {
             if(videoid != null)
 
-                bottomYTdes.setText(details);
+                bottomYTdescription.setText(details);
                 bottomYTtitle.setText(title);
                 player.cueVideo(videoid);
                 player.play();
@@ -294,12 +388,13 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             public void playVideoOnclick(String id, String title, String description) {
 
                 if(id!=null) {
-                    player.cueVideo(id); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
-                    player.play();
+                    playOnYoutube(id,title,description);
+//                    player.cueVideo(id); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+//                    player.play();
                 }
 
 
-                bottomYTdes.setText(description);
+                bottomYTdescription.setText(description);
                 bottomYTtitle.setText(title);
             }
 
@@ -362,6 +457,11 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 
         }
+    }
+
+    @Override
+    public Lifecycle getLifecycle() {
+        return mLifecycleRegistry;
     }
 
 
