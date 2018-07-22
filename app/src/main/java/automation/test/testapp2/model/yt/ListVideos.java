@@ -1,4 +1,4 @@
-package automation.test.testapp2.yt.ytube.model;
+package automation.test.testapp2.model.yt;
 
 import com.google.api.services.youtube.model.Video;
 

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package automation.test.testapp2.yt.ytube;
+package automation.test.testapp2.util;
 
 import com.google.api.client.util.DateTime;
 

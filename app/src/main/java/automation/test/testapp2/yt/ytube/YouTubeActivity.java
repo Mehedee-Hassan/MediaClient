@@ -25,8 +25,10 @@ import com.google.api.services.youtube.model.Video;
 import java.util.List;
 
 import automation.test.testapp2.R;
-import automation.test.testapp2.yt.util.Constant;
-import automation.test.testapp2.yt.ytube.model.ListVideos;
+import automation.test.testapp2.background.GetPlaylistAsyncTask;
+import automation.test.testapp2.util.ApiKey;
+import automation.test.testapp2.view.adapter.yt.ListCardAdapter;
+import automation.test.testapp2.model.yt.ListVideos;
 
 
 public class YouTubeActivity extends AppCompatActivity {

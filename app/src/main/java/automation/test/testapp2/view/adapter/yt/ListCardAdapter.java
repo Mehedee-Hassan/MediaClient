@@ -1,9 +1,7 @@
-package automation.test.testapp2.yt.ytube;
+package automation.test.testapp2.view.adapter.yt;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,8 +19,9 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 
 import automation.test.testapp2.R;
-import automation.test.testapp2.yt.util.Constant;
-import automation.test.testapp2.yt.ytube.model.ListVideos;
+import automation.test.testapp2.util.PrettyTimeEx;
+import automation.test.testapp2.yt.ytube.YouTubeActivity;
+import automation.test.testapp2.model.yt.ListVideos;
 
 import static android.graphics.Color.WHITE;
 

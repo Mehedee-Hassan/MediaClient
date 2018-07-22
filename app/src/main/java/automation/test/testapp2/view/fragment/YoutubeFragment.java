@@ -29,12 +29,12 @@ import java.util.List;
 
 import automation.test.testapp2.R;
 import automation.test.testapp2.model.SectionDataModel;
-import automation.test.testapp2.yt.MainActivity;
-import automation.test.testapp2.yt.util.Constant;
-import automation.test.testapp2.yt.ytube.GetPlaylistAsyncTask;
-import automation.test.testapp2.yt.ytube.ListCardAdapter;
+import automation.test.testapp2.view.activity.MainActivity;
+import automation.test.testapp2.util.Constant;
+import automation.test.testapp2.background.GetPlaylistAsyncTask;
+import automation.test.testapp2.view.adapter.yt.ListCardAdapter;
 import automation.test.testapp2.yt.ytube.YouTubeActivity;
-import automation.test.testapp2.yt.ytube.model.ListVideos;
+import automation.test.testapp2.model.yt.ListVideos;
 
 /**
  * Created by DELL on 7/18/2018.

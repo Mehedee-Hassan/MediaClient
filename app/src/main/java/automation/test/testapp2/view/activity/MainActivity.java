@@ -1,7 +1,6 @@
-package automation.test.testapp2.yt;
+package automation.test.testapp2.view.activity;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -35,12 +34,12 @@ import com.google.api.services.youtube.model.Video;
 import java.util.List;
 
 import automation.test.testapp2.R;
-import automation.test.testapp2.yt.util.Constant;
-import automation.test.testapp2.yt.ytube.ApiKey;
-import automation.test.testapp2.yt.ytube.GetPlaylistAsyncTask;
-import automation.test.testapp2.yt.ytube.ListCardAdapter;
+import automation.test.testapp2.util.Constant;
+import automation.test.testapp2.util.ApiKey;
+import automation.test.testapp2.background.GetPlaylistAsyncTask;
+import automation.test.testapp2.view.adapter.yt.ListCardAdapter;
 import automation.test.testapp2.yt.ytube.YouTubeActivity;
-import automation.test.testapp2.yt.ytube.model.ListVideos;
+import automation.test.testapp2.model.yt.ListVideos;
 
 
 public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener{
@@ -226,7 +225,9 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
                 bottomYTdes.setText(details);
                 bottomYTtitle.setText(title);
-                player.cueVideo(videoid); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+                player.cueVideo(videoid);
+                player.play();
+
         }
     }
 

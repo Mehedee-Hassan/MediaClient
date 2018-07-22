@@ -1,4 +1,4 @@
-package automation.test.testapp2.yt.util;
+package automation.test.testapp2.util;
 
 /**
  * Created by DELL on 7/18/2018.
