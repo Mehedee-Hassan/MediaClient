@@ -12,20 +12,20 @@ import android.view.View;
  * Created by DELL on 7/19/2018.
  */
 
-public class TestRecyclerView extends RecyclerView {
+public class CustomRecyclerViewVertical extends RecyclerView {
 
     private static final String TAG = "TestRecyclerView";
     private boolean firstUp;
 
-    public TestRecyclerView(Context context) {
+    public CustomRecyclerViewVertical(Context context) {
         super(context);
     }
 
-    public TestRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public CustomRecyclerViewVertical(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TestRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public CustomRecyclerViewVertical(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

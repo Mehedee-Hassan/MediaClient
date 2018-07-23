@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/bg_light">
 
-    <automation.test.testapp2.recycler.TestRecyclerView2
-        android:id="@+id/dummyfrag_scrollableview"
+    <automation.test.testapp2.recycler.CustomRecyclerViewHoraizontal
+        android:id="@+id/commonfrag_scrollableview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"

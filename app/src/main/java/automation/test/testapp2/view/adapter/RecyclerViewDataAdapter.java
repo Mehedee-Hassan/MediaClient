@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import automation.test.testapp2.R;
 import automation.test.testapp2.model.SectionDataModel;
-import automation.test.testapp2.recycler.TestRecyclerView;
+import automation.test.testapp2.recycler.CustomRecyclerViewVertical;
 
 public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDataAdapter.ItemRowHolder>{
 
@@ -79,15 +79,15 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
         return (null != dataList ? dataList.size() : 0);
     }
 
-    public class ItemRowHolder extends TestRecyclerView.ViewHolder {
+    public class ItemRowHolder extends CustomRecyclerViewVertical.ViewHolder {
         protected TextView itemTitle;
-        protected TestRecyclerView recyclerView;
+        protected CustomRecyclerViewVertical recyclerView;
         protected Button btnMore;
 
         public ItemRowHolder(View itemView) {
             super(itemView);
             this.itemTitle = (TextView) itemView.findViewById(R.id.itemTitle);
-            this.recyclerView = (TestRecyclerView) itemView.findViewById(R.id.recycler_view_list);
+            this.recyclerView = (CustomRecyclerViewVertical) itemView.findViewById(R.id.recycler_view_list);
             this.btnMore = (Button) itemView.findViewById(R.id.btnMore);
         }
     }

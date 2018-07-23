@@ -182,25 +182,9 @@ public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHo
         }
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.itemView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String details = video.getSnippet().getDescription();
-                        if (details == null || details.isEmpty()){
-                            details = (video.getSnippet().getPublishedAt() != null) ? new PrettyTimeEx().format(video.getSnippet().getPublishedAt()) : "";
-                            details += " | "+video.getStatistics().getViewCount()+" views";
-                        }
+        Log.d(TAG, "onBindViewHolder: "+fromMainActivity);
 
-                        mListener.playVideoOnclick(video.getId(),video.getSnippet().getTitle(),details);
-                    }
-                });
-            }
-        });
-
-        if(fromMainActivity == true){
+        if(fromMainActivity){
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -214,8 +198,25 @@ public class ListCardAdapter extends RecyclerView.Adapter<ListCardAdapter.ViewHo
                                 details += " | "+video.getStatistics().getViewCount()+" views";
                             }
 
+                            mListener.playVideoOnclick(video.getId(),video.getSnippet().getTitle(),details);
+                        }
+                    });
+                }
+            });
+        }
+        else{
 
-
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.itemView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            String details = video.getSnippet().getDescription();
+                            if (details == null || details.isEmpty()){
+                                details = (video.getSnippet().getPublishedAt() != null) ? new PrettyTimeEx().format(video.getSnippet().getPublishedAt()) : "";
+                                details += " | "+video.getStatistics().getViewCount()+" views";
+                            }
 
 //                            mListener.playVideoOnclick(video.getId(),video.getSnippet().getTitle(),details);
                             mListener.startActivityAndPlay(video.getId(),video.getSnippet().getTitle(),details);

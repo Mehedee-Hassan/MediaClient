@@ -15,7 +15,7 @@ import automation.test.testapp2.R;
 import automation.test.testapp2.view.adapter.RecyclerViewDataAdapter;
 import automation.test.testapp2.model.SectionDataModel;
 import automation.test.testapp2.model.SingleItemModel;
-import automation.test.testapp2.recycler.TestRecyclerView2;
+import automation.test.testapp2.recycler.CustomRecyclerViewHoraizontal;
 
 /**
  * Created by DELL on 7/18/2018.
@@ -42,7 +42,7 @@ public class CommonFragment extends Fragment {
 
         createDummyData();
 
-        TestRecyclerView2 recyclerView = (TestRecyclerView2) view.findViewById(R.id.dummyfrag_scrollableview);
+        CustomRecyclerViewHoraizontal recyclerView = (CustomRecyclerViewHoraizontal) view.findViewById(R.id.commonfrag_scrollableview);
         recyclerView.setHasFixedSize(true);
         RecyclerViewDataAdapter adapter = new RecyclerViewDataAdapter(allSampleData, this.getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));

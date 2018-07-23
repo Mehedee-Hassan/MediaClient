@@ -147,7 +147,7 @@ public class YoutubeFragment extends Fragment {
 
     private void initCardAdapter(final ListVideos listVideos) {
 
-        boolean fromMainActivity  = true;
+        boolean fromMainActivity  = false;
 
         mListCardAdapter = new ListCardAdapter(listVideos, new YouTubeActivity.LastItemReachedListener() {
             @Override
@@ -239,5 +239,10 @@ public class YoutubeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
 
+
+        super.onResume();
+    }
 }

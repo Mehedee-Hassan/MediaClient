@@ -13,18 +13,18 @@ import static java.lang.Math.abs;
  * Created by DELL on 7/19/2018.
  */
 
-public class TestRecyclerView2 extends RecyclerView {
+public class CustomRecyclerViewHoraizontal extends RecyclerView {
 
     private static final String TAG = "TestRecyclerView2";
-    public TestRecyclerView2(Context context) {
+    public CustomRecyclerViewHoraizontal(Context context) {
         super(context);
     }
 
-    public TestRecyclerView2(Context context, @Nullable AttributeSet attrs) {
+    public CustomRecyclerViewHoraizontal(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TestRecyclerView2(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public CustomRecyclerViewHoraizontal(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

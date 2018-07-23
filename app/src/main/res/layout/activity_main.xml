@@ -50,6 +50,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/yt_details_text_list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -133,6 +134,7 @@
         android:layout_height="match_parent"
         android:layout_weight="46"
         android:background="@color/cyan"
+        android:id="@+id/yt_bottom_nav_container"
 
         >
 

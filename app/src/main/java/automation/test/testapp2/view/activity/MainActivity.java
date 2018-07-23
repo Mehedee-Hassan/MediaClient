@@ -129,6 +129,8 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         }
     };
     private FrameLayout youtubePlayerContainer;
+    private FrameLayout youtubeDetailsTxtListContainer;
+    private FrameLayout youtubeBottomNavContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,11 +157,12 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 
 //        youTubeView = (YouTubePlayerView) findViewById(R.id.youtube_view);
-        youTubeViewTestLib = (com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView)findViewById(R.id.youtube_player_view);
+
         youtubePlayerContainer = (FrameLayout) findViewById(R.id.youtube_player_container);
+        youtubeDetailsTxtListContainer = (FrameLayout) findViewById(R.id.yt_details_text_list_container);
+        youtubeBottomNavContainer = (FrameLayout) findViewById(R.id.yt_bottom_nav_container);
 
 //        youTubeView.initialize(ApiKey.YOUTUBE_API_KEY, this);
-
 //        getLifecycle().addObserver(youTubeViewTestLib);
 
         playOnYoutube(videoid,title,details);
@@ -186,6 +189,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         final com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView.LayoutParams makefullscreenytVid  = new com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
 
+        youTubeViewTestLib = (com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayerView)findViewById(R.id.youtube_player_view);
 
         youTubeViewTestLib.getPlayerUIController().setFullScreenButtonClickListener(new View.OnClickListener() {
             @Override
@@ -194,43 +198,72 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
 //                youtubePlayerContainer.setLayoutParams(makefullscreen);
                 if(youTubeViewTestLib.isFullScreen()){
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     youTubeViewTestLib.exitFullScreen();
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     mRecyclerView.setVisibility(View.VISIBLE);
 
+
+                    youtubeBottomNavContainer.setVisibility(View.VISIBLE);
+                    youtubeDetailsTxtListContainer.setVisibility(View.VISIBLE);
+                    youTubeViewTestLib.setLayoutParams(makefullscreenytVid);
 
                 }else {
 
                     youTubeViewTestLib.enterFullScreen();
-                    youTubeViewTestLib.setLayoutParams(makefullscreenytVid);
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     mRecyclerView.setVisibility(View.GONE);
-                    youtubePlayerContainer.setLayoutParams(makefullscreen);
+                    youTubeViewTestLib.setLayoutParams(makefullscreenytVid);
+                    //youtubePlayerContainer.setLayoutParams(makefullscreen);
+//                    youtubeDetailsTxtListContainer.
+
+                    youtubeBottomNavContainer.setVisibility(View.GONE);
+                    youtubeDetailsTxtListContainer.setVisibility(View.GONE);
 
                 }
             }
         });
 
 
-
         youTubeViewTestLib.initialize(new YouTubePlayerInitListener() {
             @Override
             public void onInitSuccess(@NonNull final com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer youTubePlayer) {
 
-                youTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+                AbstractYouTubePlayerListener abstractYouTubePlayerListener = new AbstractYouTubePlayerListener() {
+
+                    @Override
+                    public void onVideoId(@NonNull String videoId) {
+
+
+                        Log.d(TAG, "onready onVideoId: 1 "+videoId);
+                        super.onVideoId(videoId);
+                    }
                     @Override
                     public void onReady() {
+                        Log.d(TAG, "onReady 1: "+videoid);
+
 
                         String videoId = videoid;
                         bottomYTtitle.setText(title);
+
+
+//                        youTubePlayer.pause();
+
+                        youTubePlayer.loadVideo(videoid,0f);
+
+
+
+//                    youTubePlayer.cueVideo(videoId,0f);
+//                    youTubePlayer.play();
+
                         bottomYTdescription.setText(details);
-
-
-                        youTubePlayer.loadVideo(videoId, 0);
-
-
+//                    youTubePlayer.loadVideo(videoId, 0f);
                     }
-                });
+                };
+
+                youTubePlayer.removeListener(abstractYouTubePlayerListener);
+                youTubePlayer.addListener(abstractYouTubePlayerListener);
+
+
             }
 
         }, true);
@@ -300,7 +333,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
         if (loadNewListView){
             mListVideos = new ListVideos();
-            reloadUi(mListVideos, true, Constant.FLAGS.NO_MOST_POPULAR, videoCategory);
+            reloadUi(mListVideos, true, Constant.FLAGS.MOST_POPULAR, videoCategory);
         }else
         if (mListVideos != null ) {
             reloadUi(mListVideos, false, Constant.FLAGS.MOST_POPULAR, videoCategory);
@@ -325,12 +358,12 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 //        player.setPlaybackEventListener(playbackEventListener);
 
         if (!b) {
-            if(videoid != null)
+//            if(videoid != null)
 
-                bottomYTdescription.setText(details);
-                bottomYTtitle.setText(title);
-                player.cueVideo(videoid);
-                player.play();
+//                bottomYTdescription.setText(details);
+//                bottomYTtitle.setText(title);
+//                player.cueVideo(videoid);
+//                player.play();
 
         }
     }
@@ -385,24 +418,58 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             }
 
             @Override
-            public void playVideoOnclick(String id, String title, String description) {
+            public void playVideoOnclick(final String id, final String title, final String description) {
+
+                Log.d(TAG, "playVideoOnclick 1: ");
 
                 if(id!=null) {
                     playOnYoutube(id,title,description);
-//                    player.cueVideo(id); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
-//                    player.play();
+//                    Log.d(TAG, "playVideoOnclick 2: ");
+//
+//                    playOnYoutube(id,title,description);
+////                    player.cueVideo(id);
+////                    player.play();
+//
+//
+//                    youTubeViewTestLib.initialize(new YouTubePlayerInitListener() {
+//
+//                        @Override
+//                        public void onInitSuccess(@NonNull final com.pierfrancescosoffritti.androidyoutubeplayer.player.YouTubePlayer youTubePlayer) {
+//
+//                            Log.d(TAG, "onInitSuccess: title = "+title+" des = "+description+" id="+id);
+//
+//
+//
+//                            youTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+//                                @Override
+//                                public void onReady() {
+//
+////                                    String videoId = id;
+//                                    bottomYTtitle.setText(title);
+//                                    bottomYTdescription.setText(description);
+//
+//                                    Log.d(TAG, "onReady: "+id);
+//                                    youTubePlayer.cueVideo(id, 0);
+//                                    youTubePlayer.play();
+//                                }
+//                            });
+//
+//                        }
+//                    }, true);
+
+
                 }
 
 
-                bottomYTdescription.setText(description);
-                bottomYTtitle.setText(title);
+//                bottomYTdescription.setText(description);
+//                bottomYTtitle.setText(title);
             }
 
             @Override
             public void startActivityAndPlay(String id, String title, String details) {
 
             }
-        },false);
+        },true);
 
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

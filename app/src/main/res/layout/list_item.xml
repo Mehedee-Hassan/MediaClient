@@ -64,7 +64,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <automation.test.testapp2.recycler.TestRecyclerView
+            <automation.test.testapp2.recycler.CustomRecyclerViewVertical
                 android:id="@+id/recycler_view_list"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
